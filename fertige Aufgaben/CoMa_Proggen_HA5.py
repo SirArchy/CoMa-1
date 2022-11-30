@@ -45,3 +45,15 @@ def are_disjoint(list1, list2):
         return True
     else:
         return False
+
+
+print(get_classes(2,[(1, 0), (0, 1)])) # [[0, 1], [0, 1]]   gibt aber [[0, 1], [1, 0]] zurück
+print(are_equal([0, 1],[0, 1])) # True
+print(are_disjoint([0, 1],[0, 1])) # False
+print(are_equal([0, 1],[1, 0])) # True
+print(are_disjoint([0, 1],[1, 0])) # False
+print(are_equal([1, 0],[0, 1])) # True
+print(are_disjoint([1, 0],[0, 1])) # False
+print(are_equal([1, 0],[1, 0])) # True
+print(are_disjoint([1, 0],[1, 0])) # False
+print(get_eqclasses(2,[(1, 0), (0, 1)])) # [[0, 1]]
