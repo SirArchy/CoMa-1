@@ -7,7 +7,6 @@ def abstand(s, t, dateiname="labyrinth.dat"):
     output:
     length of path(int) = 
     """
-    queue
     maze = labyrinth_einlesen(dateiname)
     path = breitensuche(maze, s, t)
     if path == None:
@@ -19,7 +18,7 @@ def abstand(s, t, dateiname="labyrinth.dat"):
 def breitensuche(maze, start, end):
     """
     input:
-    maze(list) - Labyrinth durch das gesucht wird
+    maze(list) - Labyrinth durch das gesucht wirds
     start(tuple) - Startkoordinate (Reihe, Spalte)
     end(tuple) - Endkoordinate (Reihe, Spalte)
     output:
@@ -30,7 +29,7 @@ def breitensuche(maze, start, end):
 
     while len(queue) != 0:
         if queue[0] == start:
-            path = [queue.pop(0)]  # Required due to a quirk with tuples in Python
+            path = [queue.pop(0)] 
         else:
             path = queue.pop(0)
         front = path[-1]
@@ -74,20 +73,21 @@ def benachbarteFelder(maze, space, visited):
 def labyrinth_einlesen(filename):
     """
     input:
-    filename(string) - tuple containing coordinates (row, col)
+    filename(string) - 
     output:
     maze
     """
+    # filename = "C:\\Users\Fabian\PycharmProjects\CoMa_Proggen\labyrinth.dat"
     maze = list()
-    with open(filename) as file:
+    with open(filename, "r") as file:
         for line in file:
             maze.append(list(line.rstrip()))
     return maze
 
 
-"""
+
+print(abstand((0,1), (0,1), "C:\\Users\Fabian\PycharmProjects\CoMa_Proggen\labyrinth.dat"))
 print(abstand((0,9), (2,2)))
-print(abstand((0,9), (0,7)))
-print(abstand((0,9), (0,9)))
-print(abstand((0,0),(50,50)))
-"""
+print(abstand((0,1), (0,7)))
+print(abstand((0,9),(0,7)))
+
