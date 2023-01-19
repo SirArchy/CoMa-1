@@ -1,11 +1,15 @@
 def abstand(s, t, dateiname="labyrinth.dat"):
     """
-    input:
-    s() =
-    t() =
-    dateiname(string) =
-    output:
-    length of path(int) = 
+    Liest Labyrinth aus Datei mit "dateiname" und gibt die Anzahl der Schritte
+    von Startpunkt "s" nach Endpunkt "t" zurück.
+    
+    Input:
+    s(tuple) - Start Punkt im Labyrinth (Reihe, Spalte)
+    t(tuple) - End Punkt im Labyrinth (Reihe, Spalte)
+    dateiname(string) - Name des einzulesenden Labyrinths
+    
+    Output:
+    length of path(int) - Anzahl der Schritte
     """
     maze = labyrinth_einlesen(dateiname)
     path = breitensuche(maze, s, t)
@@ -17,11 +21,14 @@ def abstand(s, t, dateiname="labyrinth.dat"):
 
 def breitensuche(maze, start, end):
     """
-    input:
-    maze(list) - Labyrinth durch das gesucht wirds
+    Führt Breitensuche auf das Labyrinth "maze" durch vom Startpunkt "start" bis zum Endpunkt "end"
+    
+    Input:
+    maze(list) - Labyrinth durch das gesucht wird
     start(tuple) - Startkoordinate (Reihe, Spalte)
     end(tuple) - Endkoordinate (Reihe, Spalte)
-    output:
+    
+    Output:
     path(int) - kürzester Weg von Startpunkt zum Endepunkt
     """
     queue = [start]
@@ -46,9 +53,15 @@ def breitensuche(maze, start, end):
 
 def benachbarteFelder(maze, space, visited):
     """
-    input:
-    space(tuple) - beinhaltet Koordinate (row, col)
-    output:
+    Sucht in der Liste des Labyrinths "maze" vom Feld "space" aus, nach allen benachbarten passierbaren Feldern.
+    Liste "visited" beinhaltet alle bereits gelaufenen Felder.
+
+    Input:
+    maze(list) - Labyrinth als Liste
+    space(tuple) - beinhaltet Koordinate des derzeitigen Feldes (row, col)
+    visited() - beinhaltet alle bereits gelaufenen Felder
+    
+    Output:
     final(list) - alle benachbarten passierbaren Felder
     """
     # added alle benachbarten Koordinaten zu spaces
@@ -72,18 +85,20 @@ def benachbarteFelder(maze, space, visited):
 
 def labyrinth_einlesen(filename):
     """
-    input:
-    filename(string) - 
-    output:
-    maze
+    Liest die Labyrinth Datei mit dem Namen "filename" ein und gibt diese als Liste "maze" zurück
+    
+    Input:
+    filename(string) - Name des einzulesenden Labyrinths
+    
+    Output:
+    maze(list) - Labyrinth als Liste
     """
     # filename = "C:\\Users\Fabian\PycharmProjects\CoMa_Proggen\labyrinth.dat"
-    maze = list()
+    maze = []
     with open(filename, "r") as file:
         for line in file:
-            maze.append(list(line.rstrip()))
+            maze.append(line.rstrip())
     return maze
-
 
 
 print(abstand((0,1), (0,1), "C:\\Users\Fabian\PycharmProjects\CoMa_Proggen\labyrinth.dat"))

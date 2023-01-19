@@ -12,10 +12,14 @@ def updatePosition(n, m, pos, rnd):
      """
     left_edge = []
     right_edge = []
-    for i in range(0, (m * n) - 1, m): # linken Rand bestimmen
-        left_edge.append(i)
-    for j in range((m - 1), (m * n), m): # rechten Rand bestimmen
-        right_edge.append(j)
+    if n == 1 and m == 1:
+        left_edge.append(0)
+        right_edge.append(0)
+    else:
+        for i in range(0, (m * n) - 1, m): # linken Rand bestimmen
+            left_edge.append(i)
+        for j in range((m - 1), (m * n), m): # rechten Rand bestimmen
+            right_edge.append(j)
     # Bewegung
     if 0 <= rnd < 0.25: # nach rechts
         if pos in right_edge:
@@ -86,7 +90,7 @@ def extractSquare(positions):
                 break
         else:
             break
-    return square
+    return (positions,square)
 
 
 def giftExchange(square):
@@ -207,6 +211,8 @@ def zombieChristmas(n,m,positions): # nochmal überarbeiten
     print(christmasFate(intermediate_list))
 
 """""
+print(updatePosition(1, 1, 0, 0.4870226888229471)) # gibt -1 zurück, soll aber 0 zurück geben 
+
 positions = [['Z',0],['ZH',2],['H',3],['H',1],['H',1],['H',1],['Z',1],['Z',1]]
 zombieChristmas(2, 2, positions)
 
