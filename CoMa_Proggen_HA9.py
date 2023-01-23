@@ -75,62 +75,52 @@ def solve_LGS(A,B):
 
 def forward_substitution(L, b):
     
-    #Get number of rows
-    n = len(L[0])
+    #Get number of rows for L
+    n = len(L)
     
     #Allocating space for the solution vector
-    y = [[0 for x in range(n)]
-             for y in range(n)]
+    y = [[0 for x in range(len(b[0]))]
+             for y in range(len(b))]
     
-    #Initializing  with the first row
-    y[0] = b[0] / L[0][0] #NOT WORKING
-    
-    """Looping over rows in reverse (from the bottom  up),
-    starting with the second to last row, because  the 
-    last row solve was completed in the last step."""
-    for i in range(1, n): #NOT WORKING
-        y[i] = (b[i] - dot_product(L[i][:i], y[:i])) / L[i][i]
+    for i in range (1,n):
+        sum = 0
+        for j in range (i):
+            sum += L[i][j]*y[j]
+        y[i] = (b[i]-sum)/L[i][i] 
         
     return y
 
 
 def back_substitution(U, y):
     
-    #Number of rows
-    n = U.shape[0]
+    #Get number of rows for U
+    n = len(U)
     
     #Allocating space for the solution vector
-    x = [[0 for x in range(n)]
-             for y in range(n)]
+    x = [[0 for i in range(y[0])]
+             for j in range(y)]
 
-    """Here we perform the back-substitution.  
-    Initializing with the last row."""
-    x[-1] = y[-1] / U[-1][-1] #NOT WORKING
-    
-    """Looping over rows in reverse (from the bottom up), 
-    starting with the second to last row, because the 
-    last row solve was completed in the last step."""
-    for i in range(n-2, -1, -1): #NOT WORKING
-        x[i] = (y[i] - dot_product(U[i][i:], x[i:])) / U[i][i]
+    for i in range(n-1, -1, -1):
+        tmp = y[i]
+        for j in range(n-1, i, -1):
+            tmp -= x[j]*U[i,j]
+            
+        x[i] = tmp/U[i,i]
         
     return x
 
 
-def dot_product(A, B):
+def dot_product(A, B): #NOT WORKING!!!
     """
     Perform a dot product of two vectors or matrices
         :param A: The first vector or matrix
         :param B: The second vector or matrix
     """
-    # Section 1: Ensure A and B dimensions are the same
+    # Ensure A and B dimensions are the same
     rowsA = len(A)
-    colsA = len(A[0])
-    rowsB = len(B)
     colsB = len(B[0])
-    if rowsA != rowsB or colsA != colsB:
-        raise ArithmeticError('Matrices are NOT the same size.')
 
-    # Section 2: Sum the products
+    # Sum the products
     total = 0
     for i in range(rowsA):
         for j in range(colsB):
@@ -138,6 +128,20 @@ def dot_product(A, B):
 
     return total
 
+
+def multiply(A,B):
+    n = len(A)
+    result = [[0 for x in range(n)]
+             for y in range(n)]
+    for i in range(len(A)): # iterate through rows of A
+        for j in range(len(B[0])): # iterate through columns of B
+            for k in range(len(B)):
+                temp_result = A[i][k] + B[k][j]
+                if result[i][j] == 0:
+                    result[i][j] = temp_result
+                elif temp_result < result[i][j]:
+                    result[i][j] = temp_result
+    return result
 
 def convert_string_to_matrix(string):
     matrix_A = string.split(",")
@@ -159,10 +163,16 @@ def convert_matrix_to_string(matrix):
     string_matrix = s.replace('[', '').replace(']', '')
     return string_matrix
 
+"""
+y = '-1 7, 2 -18, -26 116'
+L = '2 4 -7, -4 -7 13, 34 71 -131'
+y = convert_string_to_matrix(y)
+L = convert_string_to_matrix(L)
 
-print(LU_decomposition('2 4 -7, -4 -7 13, 34 71 -131')) #'2 4 -7, -2 1 -1, 17 3 -9'
+print(L[2][:2])
+print(y[:2])
+"""
+ 
 print(solve_LGS('2 4 -7, -4 -7 13, 34 71 -131','-1 7, 2 -18, -26 116')) #'1 10, 1 -5, 1 -1'
-print(LU_decomposition('5 -3, 35 -29')) #'5 -3, 7 -8'
 print(solve_LGS('5 -3, 35 -29','13 15 -8, 99 25 -64')) #'2 9 -1, -1 10 1'
-print(LU_decomposition('17 4, -17 42')) #'17 4, -1 46'
 print(solve_LGS('17 4, -17 42','81, -127')) #'5, -1'
