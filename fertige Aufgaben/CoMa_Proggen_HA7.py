@@ -4,10 +4,10 @@ import random
 def updatePosition(n, m, pos, rnd):
     """ 
     input:
-    n: Anzahl der Reihen des Welt-Rechtecks,
-    m: Anzahl der Spalten des Welt-Rechtecks,
-    pos: Position der Figur als nichtnegative ganze Zahl,
-    rnd: zufälliger Float im halboffenen Intervall [0, 1),
+    n: Anzahl der Reihen des Welt-Rechtecks
+    m: Anzahl der Spalten des Welt-Rechtecks
+    pos: Position der Figur als nichtnegative ganze Zahl
+    rnd: zufälliger Float im halboffenen Intervall [0, 1)
     
     output:
     pos: aktualisierte Position der Figur als nichtnegative ganze Zahl
@@ -48,9 +48,11 @@ def updatePosition(n, m, pos, rnd):
 
 def updatePositions(n,m,positions):
     """
+    führt updatePosition für alle Elemente in der übergebenen Liste positions
+    durch
     input:
-    n: Anzahl der Reihen des Welt-Rechtecks,
-    m: Anzahl der Spalten des Welt-Rechtecks,
+    n: Anzahl der Reihen des Welt-Rechtecks
+    m: Anzahl der Spalten des Welt-Rechtecks
     positions: Liste mit allen Positionen der Figuren
     
     output:
@@ -96,6 +98,7 @@ def extractSquare(positions):
 
 def giftExchange(square):
     """
+    realisiert die Begegnung von Figuren auf dem gleichen Feld
     input:
     square: alle letzten Elemente mit dem gleichen Eintrag in der zweiten Position aus positions Liste
     
@@ -123,8 +126,6 @@ def giftExchange(square):
             nr_Z = nr_Z + 1
         if i[0] == 'HH':
             nr_HH = nr_HH + 1
-        if i[0] == 'H':
-            nr_H = nr_H + 1
     # Austausch b)
     if nr_Z > 0 and nr_H > 0 or nr_Z > 0 and nr_HH > 0:
         if nr_Z >= (2*nr_HH):
@@ -137,26 +138,6 @@ def giftExchange(square):
             for i in square:
                 if i[0] == 'Z':
                     i[0] = 'ZH'
-
-
-def christmasFated(positions):
-    """
-    input:
-    positions: Liste mit allen Positionen der Figuren
-    
-    output:
-    "Zombies ate my Christmas!": nur noch Zombies "Z" oder "ZH" in positions gibt
-    "Ho, ho, ho, and a merry Zombie-Christmas!": keine Zombies "Z" und mindestens einen Menschen "H" oder "HH" in positions gibt
-    """
-    positions_type = []
-    for i in positions: # Typen auslesen
-        positions_type.append(i[0])
-    if "H" not in positions_type and "HH" not in positions_type:
-        return True
-    elif "Z" not in positions_type:
-        return True
-    else:
-        return False
 
 
 def mergeSquare(square, intermediate):
@@ -173,16 +154,35 @@ def mergeSquare(square, intermediate):
     return intermediate
 
 
+def christmasFated(positions):
+    """
+    input:
+    positions: Liste mit allen Positionen der Figuren
+    
+    output:
+    True: - Es gibt nur noch Zombies "Z" oder "ZH" in positions.
+          - Es gibt keine Zombies "Z" mehr in positions
+    False: wenn das nicht zutrifft
+    """
+    positions_type = []
+    for i in positions: # Typen auslesen
+        positions_type.append(i[0])
+    if "H" not in positions_type and "HH" not in positions_type:
+        return True
+    elif "Z" not in positions_type:
+        return True
+    else:
+        return False
+
+
 def christmasFate(positions):
     """
     input:
-    n: Anzahl der Reihen des Welt-Rechtecks,
-    m: Anzahl der Spalten des Welt-Rechtecks,
-    pos: Position der Figur als nichtnegative ganze Zahl,
-    rnd: zufälliger Float im halboffenen Intervall [0, 1),
+    positions: Liste mit allen Positionen der Figuren
     
     output:
-    
+    "Zombies ate my Christmas!": nur noch Zombies "Z" oder "ZH" in positions gibt
+    "Ho, ho, ho, and a merry Zombie-Christmas!": keine Zombies "Z" und mindestens einen Menschen "H" oder "HH" in positions gibt
     """
     positions_type = []
     for i in positions:
@@ -193,11 +193,11 @@ def christmasFate(positions):
         return "Ho, ho, ho, and a merry Zombie-Christmas!"
 
 
-def zombieChristmas(n,m,positions): # nochmal überarbeiten
+def zombieChristmas(n,m,positions):
     """
     input:
-    n: Anzahl der Reihen des Welt-Rechtecks,
-    m: Anzahl der Spalten des Welt-Rechtecks,
+    n: Anzahl der Reihen des Welt-Rechtecks
+    m: Anzahl der Spalten des Welt-Rechtecks
     positions: Liste mit allen Positionen der Figuren
     
     output:
@@ -216,8 +216,8 @@ def zombieChristmas(n,m,positions): # nochmal überarbeiten
 
 
 
-"""""
-print(updatePosition(1, 1, 0, 0.4870226888229471)) # gibt -1 zurück, soll aber 0 zurück geben 
+"""
+print(updatePosition(1, 1, 0, 0.4870226888229471))
 
 positions = [['Z',0],['ZH',2],['H',3],['H',1],['H',1],['H',1],['Z',1],['Z',1]]
 zombieChristmas(2, 2, positions)
@@ -248,7 +248,7 @@ print(positions)
 square = extractSquare(positions)
 print(square)
 print(positions)
-
+"""
 
 square = [['Z', 160], ['H', 160], ['Z', 160], ['ZH', 160], ['H', 160], ['Z', 160], ['ZH', 160], ['H', 160], ['Z', 160], ['ZH', 160], ['HH', 160], ['ZH', 160], ['ZH', 160], ['H', 160], ['Z', 160], ['ZH', 160]]
 giftExchange(square)
@@ -264,7 +264,7 @@ giftExchange(square)
 print(square)
 
 
-
+"""
 print(christmasFated([['HH', 160], ['HH', 160], ['ZH', 160], ['ZH', 160]]))
 print(christmasFated([['HH', 160], ['HH', 160], ['Z', 160], ['ZH', 160]]))
 print(christmasFated([['HH', 160], ['HH', 160], ['H', 160], ['ZH', 160]]))
@@ -277,6 +277,4 @@ print(intermediate)
 
 christmasFate([['HH', 160], ['HH', 160], ['ZH', 160], ['ZH', 160]])
 christmasFate([['Z', 160], ['Z', 160], ['ZH', 160], ['ZH', 160]])
-
-"""""
-
+"""
