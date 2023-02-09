@@ -1,52 +1,28 @@
+def longest_unimodal_sublist(arr):
+    n = len(arr)
+    if n <= 2:
+        return n
+    inc, dec = [1] * n, [1] * n
+    for i in range(1, n):
+        if arr[i] >= arr[i-1]:
+            inc[i] = inc[i-1] + 1
+    for i in range(n-2, -1, -1):
+        if arr[i] > arr[i+1]:
+            dec[i] = dec[i+1] + 1
+    max_len = 0
+    for i in range(n):
+        max_len = max(max_len, inc[i] + dec[i] - 1)
+    return max_len
 
-def evaluate(string):
-    string = string.replace(" ", "")    
-    lis = splitby(string, "+")
-    
-    for i in range(len(lis)):
-        lis[i] = evaluate_mul_div(lis[i])
-
-    output = float(lis[0])
-    lis = lis[1:]
-
-    while len(lis) > 0:
-        number = float(lis[1])
-        lis = lis[2:]
-        output += number
-
-    return output
-
-
-def evaluate_mul_div(string):
-        lis = splitby(string, "*")
-        if len(lis) == 1:
-            return lis[0]
-        
-        output = float(lis[0])
-        lis = lis[1:]
-
-        while len(lis) > 0:
-            number = float(lis[1])
-            lis = lis[2:]
-            output *= number
-
-        return output
-
-
-def splitby(string, separators):
-       lis = []
-       current = ""
-       for ch in string:
-           if ch in separators:
-               lis.append(current)
-               lis.append(ch)
-               current = ""
-           else:
-               current += ch
-       lis.append(current)
-       return lis
-
-testcases = ["1+2*34+5*6", "1+2*34+5*6*2+3*5", "1+2*34+5*61+2*34+5"]
-
-for case in testcases:
-    print(case, "->", evaluate(case))
+print(longest_unimodal_sublist([3, 3, 3, 4, 2]))
+# should return 5
+print(longest_unimodal_sublist([0, 0, 0, 0, 0, 0, 0, 0, 0, 0]))
+# should return 10
+print(longest_unimodal_sublist([4,5,3,2,1,3,6,4,7]))
+# should return 5
+print(longest_unimodal_sublist([10,9,8,10,6,5,4,3,2,3]))
+# should return 7
+print(longest_unimodal_sublist([10,9,8,7,6,5,4,3,2,3]))
+# should return 9
+print(longest_unimodal_sublist([10,9,8,7,6,5,4,3,2,1]))
+# should return 10

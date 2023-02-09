@@ -276,6 +276,3 @@ def multiply(A,B):
         for j in range(len(A)):
             prod[j][i] = scalar_product(col,get_row(A,j))
     return prod
-
-
-

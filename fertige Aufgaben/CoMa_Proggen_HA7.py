@@ -2,14 +2,16 @@ import random
 
 
 def updatePosition(n, m, pos, rnd):
+    """ 
+    input:
+    n: Anzahl der Reihen des Welt-Rechtecks,
+    m: Anzahl der Spalten des Welt-Rechtecks,
+    pos: Position der Figur als nichtnegative ganze Zahl,
+    rnd: zufälliger Float im halboffenen Intervall [0, 1),
+    
+    output:
+    pos: aktualisierte Position der Figur als nichtnegative ganze Zahl
     """
-     input:
-     s() =
-     t() =
-     dateiname(string) =
-     output:
-     length of path(int) =
-     """
     left_edge = []
     right_edge = []
     if n == 1 and m == 1:
@@ -46,13 +48,14 @@ def updatePosition(n, m, pos, rnd):
 
 def updatePositions(n,m,positions):
     """
-     input:
-     s() =
-     t() =
-     dateiname(string) =
-     output:
-     length of path(int) =
-     """
+    input:
+    n: Anzahl der Reihen des Welt-Rechtecks,
+    m: Anzahl der Spalten des Welt-Rechtecks,
+    positions: Liste mit allen Positionen der Figuren
+    
+    output:
+    keiner
+    """
     for i in positions:
         rnd = random.random()
         i[1] = updatePosition(n, m, i[1], rnd)
@@ -60,25 +63,23 @@ def updatePositions(n,m,positions):
 
 def sortPositions(positions):
     """
-     input:
-     s() =
-     t() =
-     dateiname(string) =
-     output:
-     length of path(int) =
-     """
+    input:
+    positions: Liste mit allen Positionen der Figuren
+    
+    output:
+    pos: aufsteigend nach den zweiten Einträgen der Teillisten sortierte Liste mit Positionen
+    """
     positions.sort(key=lambda x: x[1])
 
 
 def extractSquare(positions):
     """
-     input:
-     s() =
-     t() =
-     dateiname(string) =
-     output:
-     length of path(int) =
-     """
+    input:
+    positions: Liste mit allen Positionen der Figuren
+    
+    output:
+    pos: alle Figuren auf dem Feld mit dem höchsten Index in positions
+    """
     sortPositions(positions)
     square = [positions[-1]] #letzten Eintrag von positions an square anfügen
     del positions[-1]
@@ -95,13 +96,12 @@ def extractSquare(positions):
 
 def giftExchange(square):
     """
-     input:
-     s() =
-     t() =
-     dateiname(string) =
-     output:
-     length of path(int) =
-     """
+    input:
+    square: alle letzten Elemente mit dem gleichen Eintrag in der zweiten Position aus positions Liste
+    
+    output:
+    keiner
+    """
     nr_H = 0
     nr_HH = 0
     nr_ZH = 0
@@ -141,13 +141,13 @@ def giftExchange(square):
 
 def christmasFated(positions):
     """
-     input:
-     s() =
-     t() =
-     dateiname(string) =
-     output:
-     length of path(int) =
-     """
+    input:
+    positions: Liste mit allen Positionen der Figuren
+    
+    output:
+    "Zombies ate my Christmas!": nur noch Zombies "Z" oder "ZH" in positions gibt
+    "Ho, ho, ho, and a merry Zombie-Christmas!": keine Zombies "Z" und mindestens einen Menschen "H" oder "HH" in positions gibt
+    """
     positions_type = []
     for i in positions: # Typen auslesen
         positions_type.append(i[0])
@@ -161,13 +161,13 @@ def christmasFated(positions):
 
 def mergeSquare(square, intermediate):
     """
-     input:
-     s() =
-     t() =
-     dateiname(string) =
-     output:
-     length of path(int) =
-     """
+    input:
+    square: alle letzten Elemente mit dem gleichen Eintrag in der zweiten Position aus positions Liste
+    intermediate: Zwischenspeicher-Liste
+    
+    output:
+    intermediate: Endliste nachdem square an die gegebene Liste intermediate angefügt wurde 
+    """
     for i in square:
         intermediate.append(i)
     return intermediate
@@ -175,13 +175,15 @@ def mergeSquare(square, intermediate):
 
 def christmasFate(positions):
     """
-     input:
-     s() =
-     t() =
-     dateiname(string) =
-     output:
-     length of path(int) =
-     """
+    input:
+    n: Anzahl der Reihen des Welt-Rechtecks,
+    m: Anzahl der Spalten des Welt-Rechtecks,
+    pos: Position der Figur als nichtnegative ganze Zahl,
+    rnd: zufälliger Float im halboffenen Intervall [0, 1),
+    
+    output:
+    
+    """
     positions_type = []
     for i in positions:
         positions_type.append(i[0])
@@ -193,13 +195,14 @@ def christmasFate(positions):
 
 def zombieChristmas(n,m,positions): # nochmal überarbeiten
     """
-     input:
-     s() =
-     t() =
-     dateiname(string) =
-     output:
-     length of path(int) =
-     """
+    input:
+    n: Anzahl der Reihen des Welt-Rechtecks,
+    m: Anzahl der Spalten des Welt-Rechtecks,
+    positions: Liste mit allen Positionen der Figuren
+    
+    output:
+    pos: aktualisierte Position der Figur als nichtnegative ganze Zahl
+    """
     intermediate_list = []
     while not christmasFated(positions):
         updatePositions(n,m,positions) # Bewegung aller Figuren
@@ -209,6 +212,9 @@ def zombieChristmas(n,m,positions): # nochmal überarbeiten
             intermediate_list = mergeSquare(extracted_square, intermediate_list) # Anfügen an positions
         positions = intermediate_list
     print(christmasFate(intermediate_list))
+
+
+
 
 """""
 print(updatePosition(1, 1, 0, 0.4870226888229471)) # gibt -1 zurück, soll aber 0 zurück geben 

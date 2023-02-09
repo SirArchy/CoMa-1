@@ -1,78 +1,28 @@
-def evaluate(string):
-    # convert string to list
-    stack = []
-    current = eval_depth(string,stack)
-    return current
+"""
+
+"""
+
+def maxunimod(arr):
+    n = len(arr)
+    inc = [1] * n
+    dec = [1] * n
+    for i in range(1, n):
+        for j in range(i):
+            if arr[i] > arr[j]:
+                inc[i] = max(inc[i], inc[j] + 1)
+            elif arr[i] < arr[j]:
+                dec[i] = max(dec[i], dec[j] + 1)
+    max_len = 0
+    for i in range(n):
+        max_len = max(max_len, inc[i] + dec[i] - 1)
+    return max_len
 
 
-def eval_depth(string, stack):
-    current = ""
-    open_brackets = ["{", "[", "("]
-    closed_brackets = ["}", "]", ")"]
-    for i in string:
-        if i in open_brackets: # offene Klammer --> current auf "" setzen und Inhalt auf Stack packen
-            stack.append(current)
-            eval_depth(string.replace(current + i,"",1),stack) #REKURSION
-        elif i in closed_brackets: # geschlossene Klammer --> Current auswerten und mit Stack verbinden
-            current = eval_depth0(current)
-            current = stack[-1] + current
-        else: # keine Klammer --> string bis zur nächsten Klammer in current speichern
-            current += i
-    return current
-
-
-def eval_depth0(term):
-    term = splitby(term, "+")
-    for i in range(len(term)):
-        term[i] = evaluate_mul(term[i])  
-    term = evaluate_add(term) 
-    return term
-
-
-def evaluate_mul(string_list): #WORKS
-    string_list = splitby(string_list, "*") 
-
-    if len(string_list) == 1:
-        return string_list[0]
-
-    output = int(string_list[0])
-    string_list = string_list[1:]
-
-    while len(string_list) > 0:
-        operator = string_list[0]
-        number = int(string_list[1])
-        string_list = string_list[2:]
-        if operator == "*":
-            output *= number             
-    return str(output)
-
-
-def evaluate_add(string_list): #WORKS
-    output = int(string_list[0])
-    string_list = string_list[1:]
-
-    while len(string_list) > 0:
-        number = int(string_list[1])
-        output += number
-        string_list = string_list[2:]
-    return str(output)
-
-def splitby(string, separator): #WORKS
-        lis = []
-        current_term = ""
-        for ch in string:
-            if ch in separator:
-                lis.append(current_term)
-                lis.append(ch)
-                current_term = ""
-            else:
-                current_term += ch
-        lis.append(current_term)
-        return lis
-
-
-
-
-testcases = ["15+20*{1*2+[3+2*3+4+5]+5}*{(1+2)+3}*6+(((3)))", "15+20*{1*2+[3+2]+5}*{(1+2)+3}*6+(((3)))","1+(1+1)*(1+1)","{1+1}*[1+1]+38","[{1}+5]*({2}+[{1*(3)}+2])","{3+2)+1"]
-for case in testcases:
-    print(case, "->", evaluate(case))
+print(maxunimod([4,5,3,2,1,3,6,4,7]))
+# should return 5
+print(maxunimod([10,9,8,10,6,5,4,3,2,3]))
+# should return 7
+print(maxunimod([10,9,8,7,6,5,4,3,2,3]))
+# should return 9
+print(maxunimod([10,9,8,7,6,5,4,3,2,1]))
+# should return 10
